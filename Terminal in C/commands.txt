@@ -1,0 +1,26 @@
+echo Hello world!!
+echo -n Using -n flag
+echo -E this/n is another
+pwd
+cd ..
+pwd
+cd shell
+pwd
+cd ~
+pwd
+cd .. -P
+pwd
+history
+ls -i
+ls -a
+ls
+date
+date -u
+date -y
+date -debug
+mkdir -v new
+rm -v new
+mkdir new
+rm -f new
+
+

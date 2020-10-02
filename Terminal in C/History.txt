@@ -1,0 +1,4 @@
+ls 
+cat time.c 
+cat -n time.c 
+exit 
