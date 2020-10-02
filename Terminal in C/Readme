@@ -1,3 +1,9 @@
 This contains all the C files for terminal.
-List of Supported commands:
-  
+To execute:
+  > Save all the files in same directory
+  > On terminal write: "Make shell"
+  > ./shell for each execution
+  > read .pdf for more help on indivual commands and error messages
+List of Supported commands: Commands.txt
+
+   
