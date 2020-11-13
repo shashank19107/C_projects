@@ -1,0 +1,157 @@
+diff -r /home/kernel/Downloads/linux-5.9.1/arch/x86/entry/syscalls/syscall_64.tbl /home/kernel/Desktop/q2/linux-5.9.1/arch/x86/entry/syscalls/syscall_64.tbl
+346,348d345
+< 335	common	hello			sys_hello
+< 336	common	sh_task_info		sys_sh_task_info
+< 337	common	sh_task_info_		sys_sh_task_info_
+Only in /home/kernel/Downloads/linux-5.9.1/arch/x86/include: generated
+Only in /home/kernel/Downloads/linux-5.9.1/certs: signing_key.pem
+Only in /home/kernel/Downloads/linux-5.9.1/certs: signing_key.x509
+Only in /home/kernel/Downloads/linux-5.9.1/certs: x509.genkey
+Only in /home/kernel/Downloads/linux-5.9.1: .config
+Only in /home/kernel/Downloads/linux-5.9.1: .config.old
+Only in /home/kernel/Downloads/linux-5.9.1/include: config
+Only in /home/kernel/Downloads/linux-5.9.1/include: generated
+diff -r /home/kernel/Downloads/linux-5.9.1/kernel/sys.c /home/kernel/Desktop/q2/linux-5.9.1/kernel/sys.c
+66,76d65
+< #include <linux/module.h>
+< #include <linux/kernel.h>
+< #include <linux/uaccess.h>
+< #include <linux/fs.h>
+< #include <linux/cdev.h>
+< #include <linux/proc_fs.h>
+< #include <linux/pid.h>
+< #include <linux/pid_namespace.h>
+< #include <linux/fcntl.h>
+< 
+< 
+2707,2811d2695
+< }
+< 
+< SYSCALL_DEFINE0(hello)
+< {
+< 	printk(KERN_INFO "Hello World");
+< 	return 0;
+< }
+< 
+< 
+< SYSCALL_DEFINE1(sh_task_info, int, pid)
+< {
+<   char *filename = "/home/kernel/Desktop/test.txt";
+<   char *data = "Syscall file created.\n";
+<   // Getting PID and printing it on kernel logs.
+<   struct task_struct *task;
+<   struct pid *pid_struct;
+<   pid_struct = find_get_pid(pid);
+<   task = pid_task(pid_struct, PIDTYPE_PID);
+<   if (task == NULL){
+<   	printk(KERN_INFO "Process with given PID: %d does not exists \n",pid);
+<   	return -1;
+<   }
+<   else{
+<   	printk("PID: %d",pid);
+< 	printk(KERN_INFO "exit_code: %d\n",task->exit_code);
+< 	printk("Nice Value: %d \n", task_nice(task));
+< 	printk("Command Name: %s \n", task->comm);
+< 	printk("Death Signal: %d \n", task->pdeath_signal);
+< 	printk("Exit Signal: %d \n", task->exit_signal);
+<   
+<   }
+<   
+<   struct file *file;
+<   loff_t pos = 0;
+<   int fd=0;
+< 
+<   
+<   file = filp_open(filename, O_WRONLY|O_CREAT, 0644);
+< mm_segment_t old_fs = get_fs();
+<   set_fs(KERNEL_DS);
+< 
+<   if(file){
+<   	kernel_write(file, data, strlen(data), &pos);
+<   	char n[100];
+<   	int sa;
+<   	sa = pid;
+<   	//scnprintf(n,100,"%d",sa);
+<   	//sprintf(n,"%d",100);
+<   	//kernel_write(file, n, strlen(n),&pos); 
+<   	
+<   	scnprintf(n,100,"PID: %d\n",pid);
+<   	//sprintf(n,"%d",100);
+<   	kernel_write(file, n, strlen(n),&pos);
+<   	
+<   	scnprintf(n,100,"exit_code: %d\n",task->exit_code);
+<   	//sprintf(n,"%d",100);
+<   	kernel_write(file, n, strlen(n),&pos);
+<   	scnprintf(n,100,"Nice Value: %d \n", task_nice(task));
+<   	//sprintf(n,"%d",100);
+<   	kernel_write(file, n, strlen(n),&pos);
+<   	scnprintf(n,100,"Command Name: %s \n", task->comm);
+<   	//sprintf(n,"%d",100);
+<   	kernel_write(file, n, strlen(n),&pos);
+<   	scnprintf(n,100,"Death Signal: %d \n", task->pdeath_signal);
+<   	//sprintf(n,"%d",100);
+<   	kernel_write(file, n, strlen(n),&pos); 
+<   	
+<   	scnprintf(n,100,"Exit Signal: %d \n", task->exit_signal);
+<   	//sprintf(n,"%d",100);
+<   	kernel_write(file, n, strlen(n),&pos);
+<   	
+<   	
+<   	filp_close(file, NULL);
+<   
+<   }
+<   else{
+<   	printk("Unable to open file due to memory error.");
+<   	return -2;
+<   }
+<   
+<   set_fs(old_fs);
+<    
+<   return 0;
+< }
+< 
+< SYSCALL_DEFINE1(sh_task_info_, int, pid){
+< 	struct task_struct *task;
+<   struct pid *pid_struct;
+<   pid_struct = find_get_pid(pid);
+<   task = pid_task(pid_struct, PIDTYPE_PID);
+<   if (task == NULL){
+<   	printk(KERN_INFO "Process with given PID: %d does not exists \n",pid);
+<   	return -1;
+<   }
+<   else{
+<   	printk("PID: %d",pid);
+< 	printk(KERN_INFO "exit_code: %d\n",task->exit_code);
+< 	printk("Nice Value: %d \n", task_nice(task));
+< 	printk("Command Name: %s \n", task->comm);
+< 	printk("Death Signal: %d \n", task->pdeath_signal);
+< 	printk("Exit Signal: %d \n", task->exit_signal);
+<   
+<   }
+<   return 0;
+< 
+Only in /home/kernel/Downloads/linux-5.9.1: Module.symvers
+Only in /home/kernel/Downloads/linux-5.9.1/scripts: asn1_compiler
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/basic: fixdep
+Only in /home/kernel/Downloads/linux-5.9.1/scripts: bin2c
+Only in /home/kernel/Downloads/linux-5.9.1/scripts: extract-cert
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/gdb/linux: constants.py
+Only in /home/kernel/Downloads/linux-5.9.1/scripts: insert-sys-cert
+Only in /home/kernel/Downloads/linux-5.9.1/scripts: kallsyms
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/kconfig: conf
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/kconfig: mconf
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/kconfig: mconf-cfg
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/mod: devicetable-offsets.h
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/mod: elfconfig.h
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/mod: mk_elfconfig
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/mod: modpost
+Only in /home/kernel/Downloads/linux-5.9.1/scripts: recordmcount
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/selinux/genheaders: genheaders
+Only in /home/kernel/Downloads/linux-5.9.1/scripts/selinux/mdp: mdp
+Only in /home/kernel/Downloads/linux-5.9.1/scripts: sign-file
+Only in /home/kernel/Downloads/linux-5.9.1/scripts: sorttable
+Only in /home/kernel/Downloads/linux-5.9.1/tools/objtool/arch/x86: lib
+Only in /home/kernel/Downloads/linux-5.9.1/tools/objtool: fixdep
+Only in /home/kernel/Downloads/linux-5.9.1/tools/objtool: objtool
+Only in /home/kernel/Downloads/linux-5.9.1: .version
+Only in /home/kernel/Downloads/linux-5.9.1: vmlinux-gdb.py
